@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5C08CE792CBD288800F9C674 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5C08CE782CBD288800F9C674 /* SDWebImageSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		5C08CE662CBD276500F9C674 /* SwiftUI-Spotify-UI-Practice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Spotify-UI-Practice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C08CE792CBD288800F9C674 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "SwiftUI-Spotify-UI-Practice";
 			packageProductDependencies = (
+				5C08CE782CBD288800F9C674 /* SDWebImageSwiftUI */,
 			);
 			productName = "SwiftUI-Spotify-UI-Practice";
 			productReference = 5C08CE662CBD276500F9C674 /* SwiftUI-Spotify-UI-Practice.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 5C08CE5D2CBD276500F9C674;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5C08CE772CBD288800F9C674 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5C08CE672CBD276500F9C674 /* Products */;
 			projectDirPath = "";
@@ -251,7 +260,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Spotify-UI-Practice/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Spotify-UI-Practice/Utils/Preview Content\"";
 				DEVELOPMENT_TEAM = 6N4HMYH8YX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -280,7 +289,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Spotify-UI-Practice/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI-Spotify-UI-Practice/Utils/Preview Content\"";
 				DEVELOPMENT_TEAM = 6N4HMYH8YX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5C08CE772CBD288800F9C674 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5C08CE782CBD288800F9C674 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C08CE772CBD288800F9C674 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5C08CE5E2CBD276500F9C674 /* Project object */;
 }

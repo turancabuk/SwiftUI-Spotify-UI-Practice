@@ -14,7 +14,7 @@ struct LoadingView: View {
                 .opacity(0.9)
                 .ignoresSafeArea()
             ProgressView()
-                .tint(.orange)
+                .tint(.spotifyGreen)
                 .scaleEffect(2)
                 .foregroundColor(.red)
         }

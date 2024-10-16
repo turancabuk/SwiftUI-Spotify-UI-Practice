@@ -1,5 +1,5 @@
 //
-//  MainViewCategoryCell.swift
+//  CategoryCell.swift
 //  SwiftUI-Spotify-UI-Practice
 //
 //  Created by Turan Çabuk on 15.10.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainViewCategoryCell: View {
+struct CategoryCell: View {
     
     var title           : String = "Music"
     var isSelected      : Bool = false
@@ -21,8 +21,7 @@ struct MainViewCategoryCell: View {
                 .frame(minWidth: 36)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 10)
-                .background(isSelected ? .spotifyGreen : .spotifyDarkGray)
-                .foregroundStyle(isSelected ? .spotifyBlack : .spotifyWhite)
+                .themeColors(isSelected: isSelected)
                 .cornerRadius(16)
         }
     }
@@ -32,10 +31,10 @@ struct MainViewCategoryCell: View {
     ZStack {
         Color.spotifyBlack.ignoresSafeArea()
         HStack {
-            MainViewCategoryCell(title: "deneme", isSelected: true)
-            MainViewCategoryCell(title: "tecrübe", isSelected: false)
-            MainViewCategoryCell(title: "hazır", isSelected: false)
-            MainViewCategoryCell(title: "settings", isSelected: false)
+            CategoryCell(title: "deneme", isSelected: true)
+            CategoryCell(title: "tecrübe", isSelected: false)
+            CategoryCell(title: "hazır", isSelected: false)
+            CategoryCell(title: "settings", isSelected: false)
         }
     }
 }

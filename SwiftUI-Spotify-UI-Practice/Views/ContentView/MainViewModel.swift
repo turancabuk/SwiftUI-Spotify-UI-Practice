@@ -5,7 +5,7 @@
 //  Created by Turan Çabuk on 14.10.2024.
 //
 
-import Foundation
+import SwiftUI
 
 class MainViewModel: ObservableObject {
  
@@ -13,13 +13,14 @@ class MainViewModel: ObservableObject {
     @Published var users        : [Users]    = []
     @Published var isLoading    : Bool = false
     @Published var currentUser  : Users? = nil
-
+    let columns                 = [GridItem(.flexible(minimum: 60, maximum: 200)),
+                                   GridItem(.flexible(minimum: 60, maximum: 200))]
     
     @MainActor
     func fetchProducts() async  {
         showLoadingView()
         do{
-            products = try await NetworkManager().getProducts()
+            products = try await Array(NetworkManager().getProducts().prefix(8))
             hideLoadingView()
         }catch{
             hideLoadingView()

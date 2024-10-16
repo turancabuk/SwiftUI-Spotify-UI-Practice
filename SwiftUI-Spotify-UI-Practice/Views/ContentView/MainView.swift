@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MainView: View {
     
     @StateObject private var viewmodel  = MainViewModel()
+    @State var selectedItem : Products? = nil
     
     var body: some View {
         ZStack {
@@ -19,19 +21,19 @@ struct MainView: View {
                 ZStack {
                     Color.spotifyBlack.ignoresSafeArea()
                     ScrollView(.vertical) {
-                        LazyVStack(spacing: 4, pinnedViews: [.sectionHeaders]) {
+                        LazyVStack(spacing: 2, pinnedViews: [.sectionHeaders]) {
                             Section {
-                                ForEach(0..<12) { _ in
-                                    Rectangle()
-                                        .frame(width: 120, height: 120)
-                                        .foregroundStyle(.spotifyWhite)
+                                RecentView(viewmodel: viewmodel)
+                                    .padding(.vertical, 14)
+                                if let product = viewmodel.products.first {
+                                    createNewRelease(product: product)
                                 }
-                            } header: {
+                            }header: {
                                 HeaderView(viewmodel: viewmodel)
                             }
                         }
-                        .padding(.top, 8)
                     }
+                    .frame(alignment: .leading)
                     .scrollIndicators(.hidden)
                     .clipped()
                 }
@@ -43,13 +45,39 @@ struct MainView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
     }
+    
+    private func createNewRelease(product: Products) -> some View {
+        NewReleaseCell(
+            imageName: product.thumbnail,
+            headLine: product.brand,
+            title: product.category,
+            subHeadline: product.title,
+            subTitle: product.description,
+            addToPlaylist: {print("Add to playlist")},
+            onPlayPress: {print("Play")})
+    }
+}
+
+struct RecentView: View {
+    
+    let viewmodel: MainViewModel
+    
+    var body: some View {
+        LazyVGrid(columns: viewmodel.columns) {
+            ForEach(viewmodel.products) { product in
+                RecentCell(imageName: product.images.first ?? "",
+                           title: product.title)
+            }
+        }
+        .padding(.horizontal)
+    }
 }
 
 struct HeaderView: View {
     
     let viewmodel: MainViewModel
     @State private var selectedCategory : Category? = nil
-
+    
     var body: some View {
         HStack(spacing: 0){
             if viewmodel.currentUser != nil {
@@ -63,7 +91,7 @@ struct HeaderView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(Category.allCases, id: \.self) { category in
-                            MainViewCategoryCell(title: category.rawValue, isSelected: category == selectedCategory)
+                            CategoryCell(title: category.rawValue, isSelected: category == selectedCategory)
                                 .onTapGesture {
                                     selectedCategory = category
                                 }
@@ -82,3 +110,4 @@ struct HeaderView: View {
 #Preview {
     MainView()
 }
+

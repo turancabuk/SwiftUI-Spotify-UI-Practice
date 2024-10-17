@@ -14,37 +14,50 @@ struct MainView: View {
     @State var selectedItem : Products? = nil
     
     var body: some View {
-        ZStack {
-            if viewmodel.isLoading {
-                LoadingView()
-            }else {
-                ZStack {
-                    Color.spotifyBlack.ignoresSafeArea()
-                    ScrollView(.vertical) {
-                        LazyVStack(spacing: 2, pinnedViews: [.sectionHeaders]) {
-                            Section {
-                                RecentView(viewmodel: viewmodel)
-                                    .padding(.vertical, 14)
-                                if let product = viewmodel.products.first {
-                                    createNewRelease(product: product)
+        NavigationView {
+            ZStack {
+                if viewmodel.isLoading {
+                    LoadingView()
+                }else {
+                    ZStack {
+                        Color.spotifyBlack.ignoresSafeArea()
+                        ScrollView(.vertical) {
+                            LazyVStack(spacing: 2, pinnedViews: [.sectionHeaders]) {
+                                Section {
+                                    RecentView(viewmodel: viewmodel)
+                                        .padding(.vertical, 14)
+                                    
+                                    if let product = viewmodel.products.first {
+                                        createNewRelease(product: product)
+                                    }
+                                    
+                                    if let carts = viewmodel.carts.first {
+                                        createImageTitleRowCell(carts: carts)
+                                            .padding(.horizontal, 24)
+                                            .padding(.top, 24)
+                                    }
+                                }header: {
+                                    HeaderView(viewmodel: viewmodel)
                                 }
-                            }header: {
-                                HeaderView(viewmodel: viewmodel)
                             }
                         }
+                        .frame(alignment: .leading)
+                        .scrollIndicators(.hidden)
+                        .clipped()
                     }
-                    .frame(alignment: .leading)
-                    .scrollIndicators(.hidden)
-                    .clipped()
                 }
             }
-        }
-        .task {
-            await viewmodel.fetchProducts()
-            await viewmodel.fetchUsers()
+            .task {
+                await viewmodel.fetchProducts()
+                await viewmodel.fetchUsers()
+                await viewmodel.fetchCarts()
+            }
         }
         .toolbar(.hidden, for: .navigationBar)
     }
+}
+
+extension MainView {
     
     private func createNewRelease(product: Products) -> some View {
         NewReleaseCell(
@@ -56,55 +69,23 @@ struct MainView: View {
             addToPlaylist: {print("Add to playlist")},
             onPlayPress: {print("Play")})
     }
-}
-
-struct RecentView: View {
     
-    let viewmodel: MainViewModel
-    
-    var body: some View {
-        LazyVGrid(columns: viewmodel.columns) {
-            ForEach(viewmodel.products) { product in
-                RecentCell(imageName: product.images.first ?? "",
-                           title: product.title)
-            }
-        }
-        .padding(.horizontal)
-    }
-}
-
-struct HeaderView: View {
-    
-    let viewmodel: MainViewModel
-    @State private var selectedCategory : Category? = nil
-    
-    var body: some View {
-        HStack(spacing: 0){
-            if viewmodel.currentUser != nil {
-                ImageLoaderView()
-                    .frame(width: 35, height: 35)
-                    .background(.spotifyWhite)
-                    .cornerRadius(.infinity)
-                    .onTapGesture {
-                        
+    private func createImageTitleRowCell(carts: Cart) -> some View {
+        VStack(alignment: .leading) {
+            Text(carts.products.last?.title ?? "")
+                .font(.title)
+                .foregroundStyle(.spotifyWhite)
+            ScrollView(.horizontal) {
+                HStack(alignment: .top) {
+                    ForEach(viewmodel.carts) { cart in
+                        ImageTitleRowCell(
+                            imageName: cart.products.last?.thumbnail ?? "",
+                            subtitle: cart.products.last?.title ?? "",
+                            size: 140)
                     }
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(Category.allCases, id: \.self) { category in
-                            CategoryCell(title: category.rawValue, isSelected: category == selectedCategory)
-                                .onTapGesture {
-                                    selectedCategory = category
-                                }
-                        }
-                    }
-                    .padding(.horizontal, 16)
                 }
-                .scrollIndicators(.hidden)
             }
         }
-        .padding(.vertical, 24)
-        .padding(.leading, 8)
-        .background(.spotifyBlack)
     }
 }
 #Preview {

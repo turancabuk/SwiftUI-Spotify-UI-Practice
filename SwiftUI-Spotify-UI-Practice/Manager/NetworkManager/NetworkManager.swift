@@ -24,6 +24,14 @@ struct NetworkManager {
         let users     = try await JSONDecoder().decode(UserArray.self, from: data)
         return users.users
     }
+    
+    func getCarts() async throws -> [Cart] {
+        guard let url = URL(string: "https://dummyjson.com/carts") else { throw (NetworkError.badURL)}
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let carts     = try await JSONDecoder().decode(CartArray.self, from: data)
+        return carts.carts
+    }
 }
 
 

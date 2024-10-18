@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUI_Spotify_UI_PracticeApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            PlaylistView()
         }
     }
 }

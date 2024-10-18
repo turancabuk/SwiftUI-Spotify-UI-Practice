@@ -11,9 +11,9 @@ class MainViewModel: ObservableObject {
  
     @Published var products     : [Products] = []
     @Published var users        : [Users]    = []
-    @Published var carts        : [Cart]    = []
-    @Published var isLoading    : Bool = false
-    @Published var currentUser  : Users? = nil
+    @Published var carts        : [Cart]     = []
+    @Published var isLoading    : Bool       = false
+    @Published var currentUser  : Users?     = nil
     let columns                 = [GridItem(.flexible(minimum: 60, maximum: 200)),
                                    GridItem(.flexible(minimum: 60, maximum: 200))]
     
